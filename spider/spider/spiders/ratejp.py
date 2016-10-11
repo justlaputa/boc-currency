@@ -3,10 +3,15 @@ import scrapy
 from spider.items import Rate
 
 import datetime
+import logging
 
 class RatejpSpider(scrapy.Spider):
     name = "ratejp"
     allowed_domains = ["srh.bankofchina.com"]
+
+
+    def __init__(self, lasttime):
+        self.lasttime = lasttime
 
     def start_requests(self):
         yield scrapy.Request(
@@ -18,6 +23,11 @@ class RatejpSpider(scrapy.Spider):
         row_path = '//div[@class="BOC_main publish"]/table/tr[position()>1 and position()<last()]'
 
         for rate_row in response.xpath(row_path):
+            timestamp = self.pub_time_from_row(rate_row)
+
+            if timestamp <= self.lasttime:
+                break
+            
             rate = Rate()
 
             rate['currency'] = 'JPY'
@@ -26,7 +36,7 @@ class RatejpSpider(scrapy.Spider):
             rate['tele_sell'] = self.tele_sell_from_row(rate_row)
             rate['cash_sell'] = self.cash_sell_from_row(rate_row)
             rate['middle'] = self.middle_from_row(rate_row)
-            rate['pub_time'] = self.pub_time_from_row(rate_row)
+            rate['pub_time'] = timestamp
 
             yield rate
 
