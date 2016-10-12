@@ -8,7 +8,7 @@ import logging
 class RatejpSpider(scrapy.Spider):
     name = "ratejp"
     allowed_domains = ["srh.bankofchina.com"]
-
+    finished_flg = False
 
     def __init__(self, lasttime):
         self.lasttime = lasttime
@@ -26,6 +26,7 @@ class RatejpSpider(scrapy.Spider):
             timestamp = self.pub_time_from_row(rate_row)
 
             if timestamp <= self.lasttime:
+                self.finished_flg = True
                 break
             
             rate = Rate()

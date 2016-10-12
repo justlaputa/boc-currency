@@ -4,6 +4,7 @@ from scrapy.utils.project import get_project_settings
 from influxdb import InfluxDBClient
 
 from datetime import datetime, timezone
+import iso8601
 import sys
 import logging
 
@@ -19,7 +20,11 @@ class BocCrawler():
         if len(jpy_points) == 0:
             self.last_timestamp = datetime.fromtimestamp(0, timezone.utc)
         else:
-            self.last_timestamp = jpy_points(0)['time']
+            tz_sh = datetime.timezone(datetime.timedelta(hours=8), 'Asia/Shanghai')
+
+            self.last_timestamp = iso8601.parse_date(jpy_points[0]['time'])
+            logging.info('latest updated timestamp: %s',
+                         self.last_timestamp.astimezone(tz_sh))
 
     def start(self):
         self.process.crawl('ratejp', lasttime = self.last_timestamp)
