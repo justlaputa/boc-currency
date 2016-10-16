@@ -13,7 +13,9 @@ class BocCrawler():
         scrapy_settings = get_project_settings()
         self.process = CrawlerProcess(scrapy_settings)
 
-        influxClient = InfluxDBClient(host='localhost', port=8086, database='bocrate')
+        influxClient = InfluxDBClient(host='localhost', port=8086)
+        influxClient.create_database('bocrate')
+        influxClient.switch_database('bocrate')
         rs = influxClient.query('select * from jpyrate order by time desc limit 1')
         jpy_points = list(rs.get_points())
 
