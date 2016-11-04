@@ -6,9 +6,10 @@ services:
     ports:
       - "8083:8083"
       - "8086:8086"
+      - "8088:8088"
       - "25826:25826/udp"
     volumes:
-      - /var/lib/influxdb
+      - 1f27b3e868c72a45133aff32897ce22799e5ab321ea8b8170f435474167b8f63:/var/lib/influxdb
       - ./influxdb.conf:/etc/influxdb/influxdb.conf
     restart: always
   grafana:
@@ -18,3 +19,7 @@ services:
     volumes:
       - /var/lib/grafana
     restart: always
+volumes:
+  1f27b3e868c72a45133aff32897ce22799e5ab321ea8b8170f435474167b8f63:
+    external:
+      true
