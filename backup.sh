@@ -20,6 +20,6 @@ DATE=$(date +%Y-%m-%d_%H%M%S)
 
 echo comparess backup data...
 
-tar cvfj backup-$DATE.tar.bz2
+tar cvfj backup-$DATE.tar.bz2 backup/
 
 echo "Finished backup influxdb database to file backup-$DATE.tar.bz2"
