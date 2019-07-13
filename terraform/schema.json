@@ -1,0 +1,44 @@
+[
+  {
+    "description": "timestamp of this rate point",
+    "mode": "REQUIRED",
+    "name": "timestamp",
+    "type": "TIMESTAMP"
+  },
+  {
+    "description": "the currency name",
+    "mode": "REQUIRED",
+    "name": "currency",
+    "type": "STRING"
+  },
+  {
+    "description": "buy exchange",
+    "mode": "REQUIRED",
+    "name": "ex_buy",
+    "type": "NUMERIC"
+  },
+  {
+    "description": "buy cash",
+    "mode": "REQUIRED",
+    "name": "cash_buy",
+    "type": "NUMERIC"
+  },
+  {
+    "description": "sell exchange",
+    "mode": "REQUIRED",
+    "name": "ex_sell",
+    "type": "NUMERIC"
+  },
+  {
+    "description": "sell cash",
+    "mode": "REQUIRED",
+    "name": "cash_sell",
+    "type": "NUMERIC"
+  },
+  {
+    "description": "middle price",
+    "mode": "REQUIRED",
+    "name": "middle",
+    "type": "NUMERIC"
+  }
+]
