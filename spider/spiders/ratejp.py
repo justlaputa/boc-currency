@@ -36,13 +36,13 @@ class RatejpSpider(scrapy.Spider):
             
             rate = Rate()
 
+            rate['timestamp'] = timestamp
             rate['currency'] = 'JPY'
-            rate['tele_buy'] = self.tele_buy_from_row(rate_row)
+            rate['ex_buy'] = self.ex_buy_from_row(rate_row)
             rate['cash_buy'] = self.cash_buy_from_row(rate_row)
-            rate['tele_sell'] = self.tele_sell_from_row(rate_row)
+            rate['ex_sell'] = self.ex_sell_from_row(rate_row)
             rate['cash_sell'] = self.cash_sell_from_row(rate_row)
             rate['middle'] = self.middle_from_row(rate_row)
-            rate['pub_time'] = timestamp
 
             yield rate
 
@@ -72,7 +72,7 @@ class RatejpSpider(scrapy.Spider):
         else:
             return int(url[i+5:])
 
-    def tele_buy_from_row(self, row):
+    def ex_buy_from_row(self, row):
         price = row.xpath('./td[2]/text()').extract_first()
         return float(price)
 
@@ -80,7 +80,7 @@ class RatejpSpider(scrapy.Spider):
         price = row.xpath('./td[3]/text()').extract_first()
         return float(price)
 
-    def tele_sell_from_row(self, row):
+    def ex_sell_from_row(self, row):
         price = row.xpath('./td[4]/text()').extract_first()
         return float(price)
 
@@ -89,11 +89,11 @@ class RatejpSpider(scrapy.Spider):
         return float(price)
 
     def middle_from_row(self, row):
-        price = row.xpath('./td[7]/text()').extract_first()
+        price = row.xpath('./td[6]/text()').extract_first()
         return float(price)
 
     def pub_time_from_row(self, row):
-        time = row.xpath('./td[8]/text()').extract_first()
+        time = row.xpath('./td[7]/text()').extract_first()
         (date, time) = tuple(time.strip().split())
         return self.get_datetime(date, time)
 
