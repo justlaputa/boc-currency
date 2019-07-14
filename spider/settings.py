@@ -91,3 +91,4 @@ ITEM_PIPELINES = {
 #FEED_FORMAT='json'
 #FEED_URI='items.json'
 LOG_FILE='scrapy.log'
+LOG_LEVEL='INFO'
