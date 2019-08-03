@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Chart.js samples</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+    <script src="./data.js"></script>
+
+</head>
+<body>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+    window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+		ctx.canvas.width = 1000;
+        ctx.canvas.height = 300;
+
+    var times = exchangeRate.map(d => {
+        return new Date(d.timestamp)
+    })
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: times,
+            datasets: [{
+                label: '现汇买入',
+                data: exchangeRate.map(d => d.ex_buy),
+                // backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                borderColor: window.chartColors.red,
+                type: 'line',
+                pointRadius: 0,
+                fill: false,
+                lineTension: 0,
+                borderWidth: 2,
+            }, {
+                label: '中间价',
+                data: exchangeRate.map(d => d.middle),
+                // backgroundColor: ,
+                borderColor: window.chartColors.blue,
+                type: 'line',
+                pointRadius: 0,
+                fill: false,
+                lineTension: 0,
+                borderWidth: 2,
+            }]
+        },
+        options: {
+            title: {
+                text: 'JPY/CNY exchange rate'
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        parser: 'YYYY/MM/DD HH:mm',
+                        tooltipFormat: 'll HH:mm'
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '100 JPY'
+                    }
+                }]
+            },
+        }
+    });
+    </script>
+</body>
