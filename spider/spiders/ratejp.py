@@ -15,8 +15,8 @@ class RatejpSpider(scrapy.Spider):
 
     def start_requests(self):
         yield scrapy.Request(
-            'http://srh.bankofchina.com/search/whpj/search.jsp'
-            '?erectDate=&nothing=&pjname=1323&page=1',
+            'https://srh.bankofchina.com/search/whpj/search_cn.jsp'
+            '?erectDate=&nothing=&pjname=%E6%97%A5%E5%85%83&head=head_620.js&bottom=bottom_591.js&page=1',
             callback=self.parse_page)
     
     def parse_page(self, response):
